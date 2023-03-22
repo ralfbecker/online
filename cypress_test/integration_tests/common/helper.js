@@ -399,13 +399,13 @@ function checkIfDocIsLoaded(frameId) {
 
 // Assert that NO keyboard input is accepted (i.e. keyboard should be HIDDEN).
 function assertNoKeyboardInput() {
-	cy.get('textarea.clipboard')
+	cy.get('#clipboard-area')
 		.should('have.attr', 'data-accept-input', 'false');
 }
 
 // Assert that keyboard input is accepted (i.e. keyboard should be VISIBLE).
 function assertHaveKeyboardInput(frameId) {
-	cy.customGet('textarea.clipboard', frameId)
+	cy.customGet('#clipboard-area', frameId)
 		.should('have.attr', 'data-accept-input', 'true');
 }
 
@@ -462,6 +462,7 @@ function clearAllText(frameId) {
 // expectedPlainText - a string, the clipboard container should have.
 function expectTextForClipboard(expectedPlainText, frameId) {
 	cy.log('Text:' + expectedPlainText ,  'FrameID:' + frameId);
+	cy.wait(500);
 	doIfInWriter(function() {
 		// for backward compatibility allow '/nTEXT' and 'TEXT'
 		const expectedRegex = RegExp('/^(\n' + expectedPlainText + ')|(' + expectedPlainText + ')$/');
@@ -489,6 +490,11 @@ function expectTextForClipboard(expectedPlainText, frameId) {
 	}, frameId);
 
 	doIfInImpress(function() {
+		cy.customGet('#copy-paste-container', frameId)
+			.invoke('html')
+			.then(function(value) {
+				cy.log('expectTextForClipboard: copy-paste-container content:\n' + value +'\n');
+			});
 		cy.customGet('#copy-paste-container pre', frameId)
 			.should('have.text', expectedPlainText);
 	}, frameId);
@@ -1057,7 +1063,7 @@ function moveCursor(direction, modifier,
 function typeIntoDocument(text, frameId) {
 	cy.log('Typing into document - start.');
 
-	cy.customGet('textarea.clipboard', frameId)
+	cy.customGet('#clipboard-area', frameId)
 		.type(text, {force: true});
 
 	cy.log('Typing into document - end.');
