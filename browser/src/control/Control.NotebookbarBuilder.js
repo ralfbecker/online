@@ -477,12 +477,17 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					return;
 				}
 
+				var itemCallback = function(event) {
+					builder.map.dispatch(event.item.id);
+				};
+
 				$(control.container).w2menu({
+					name: 'download-as-menu',
 					items: submenuOpts,
-					onSelect: function (event) {
-						builder.map.dispatch(event.item.id);
-					}
+					onSelect: itemCallback
 				});
+
+				builder._makeW2MenuFocusable(builder, 'w2ui-overlay-download-as-menu', submenuOpts, data.id, itemCallback);
 			});
 		}
 
