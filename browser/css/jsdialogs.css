@@ -1363,3 +1363,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .jsdialog[id^='zotero'][id$='-label']:not(:first-child) {
 	margin-inline-start: 24px;
 }
+
+/* Conditional formatting dialog */
+
+#ConditionalFormatDialog #list > .ui-scrollwindow {
+	border: solid black 1px;
+}
