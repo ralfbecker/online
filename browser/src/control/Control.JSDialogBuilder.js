@@ -3124,7 +3124,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			&& data.type !== 'frame'
 			&& data.type !== 'expander'
 			&& data.type !== 'panel'
-			&& data.type !== 'buttonbox')
+			&& data.type !== 'buttonbox'
+			&& data.type !== 'treelistbox')
 			control.setAttribute('tabIndex', '0');
 	},
 
