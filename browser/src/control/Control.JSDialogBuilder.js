@@ -625,7 +625,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		table.id = data.id;
 
 		var gridRowColStyle = 'grid-template-rows: repeat(' + rows  + ', auto); \
-			grid-template-columns: repeat(' + cols  + ', auto);';
+			grid-template-columns: repeat(' + cols  + ', 1fr);';
 
 		table.style = gridRowColStyle;
 
