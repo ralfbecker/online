@@ -2091,7 +2091,8 @@ void COOLWSD::innerInitialize(Application& self)
         { "deepl.auth_key", "" },
         { "deepl.enabled", "false" },
         { "zotero.enable", "true" },
-        { "indirection_endpoint.url", "" }
+        { "indirection_endpoint.url", "" },
+        { "product_name", APP_NAME}
     };
 
     // Set default values, in case they are missing from the config file.
@@ -5103,7 +5104,7 @@ private:
         capabilities->set("hasMobileSupport", true);
 
         // Set the product name
-        capabilities->set("productName", APP_NAME);
+        capabilities->set("productName", config::getString("product_name", APP_NAME));
 
         // Set the Server ID
         capabilities->set("serverId", Util::getProcessIdentifier());
@@ -5447,7 +5448,7 @@ void COOLWSD::processFetchUpdate()
             return; // No url, nothing to do.
 
         Poco::URI uriFetch(url);
-        uriFetch.addQueryParameter("product", APP_NAME);
+        uriFetch.addQueryParameter("product", config::getString("product_name", APP_NAME));
         uriFetch.addQueryParameter("version", COOLWSD_VERSION);
         LOG_TRC("Infobar update request from " << uriFetch.toString());
         std::shared_ptr<http::Session> sessionFetch = StorageBase::getHttpSession(uriFetch);
